@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public BulletManager bulletManager;
+
 
     public float horizontalBoundary;
     public float horizontalSpeed;
     public float maxSpeed;
+    public float horizontalTValue;
     
     private Rigidbody2D m_rigidBody;
     private Vector3 touchesEnd;
@@ -25,6 +28,16 @@ public class PlayerController : MonoBehaviour
     {
         _Move();
         _CheckBounds();
+        _FireBullet();
+    }
+
+    private void _FireBullet()
+    {
+        // delay bullet firing - every 40 frames
+        if (Time.frameCount % 20 == 0)
+        {
+            bulletManager.GetBullet(transform.position);
+        }
     }
 
     private void _Move()
@@ -64,13 +77,15 @@ public class PlayerController : MonoBehaviour
             direction = -1.0f;
         }
 
-        Vector2 newVelocity = m_rigidBody.velocity + new Vector2(direction * horizontalSpeed, 0.0f);
-        m_rigidBody.velocity = Vector2.ClampMagnitude(newVelocity, maxSpeed);
-        m_rigidBody.velocity *= 0.99f;
-
         if (touchesEnd.x != 0.0f)
         {
-           transform.position = new Vector2(Mathf.Lerp(transform.position.x, touchesEnd.x, 0.01f), transform.position.y);
+           transform.position = new Vector2(Mathf.Lerp(transform.position.x, touchesEnd.x, horizontalTValue), transform.position.y);
+        }
+        else
+        {
+            Vector2 newVelocity = m_rigidBody.velocity + new Vector2(direction * horizontalSpeed, 0.0f);
+            m_rigidBody.velocity = Vector2.ClampMagnitude(newVelocity, maxSpeed);
+            m_rigidBody.velocity *= 0.99f;
         }
     }
 
