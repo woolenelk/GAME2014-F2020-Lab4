@@ -10,6 +10,7 @@ public class BulletFactory : MonoBehaviour
     public GameObject fatBullet;
     public GameObject pulsingBullet;
     public BulletManager manager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,12 +35,15 @@ public class BulletFactory : MonoBehaviour
         {
             case BulletType.REGULAR:
                 tempBullet = Instantiate(regularBullet);
+                tempBullet.GetComponent<BulletController>().damage = 10;
                 break;
             case BulletType.THICC:
                 tempBullet = Instantiate(fatBullet);
+                tempBullet.GetComponent<BulletController>().damage = 20;
                 break;
             case BulletType.PULSING:
                 tempBullet = Instantiate(pulsingBullet);
+                tempBullet.GetComponent<BulletController>().damage = 30;
                 break;
         }
         tempBullet.transform.parent = transform;
