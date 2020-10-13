@@ -38,6 +38,11 @@ public class BulletManager : MonoBehaviour
         return newBullet;
     }
 
+    public bool HasBullets()
+    {
+        return m_bulletPool.Count > 0;
+    }
+
     public void ReturnBullet(GameObject returnedBullet)
     {
         returnedBullet.SetActive(false);

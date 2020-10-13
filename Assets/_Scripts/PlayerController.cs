@@ -1,25 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public BulletManager bulletManager;
 
-
+    [Header("Boundary Check")]
     public float horizontalBoundary;
+
+    [Header("Player Speed")]
     public float horizontalSpeed;
     public float maxSpeed;
     public float horizontalTValue;
-    
+
+    [Header("Bullet Firing")]
+    public float fireDelay;
+
+    // Private variables
     private Rigidbody2D m_rigidBody;
-    private Vector3 touchesEnd;
+    private Vector3 m_touchesEnded;
 
     // Start is called before the first frame update
     void Start()
     {
-        touchesEnd = new Vector3();
+        m_touchesEnded = new Vector3();
         m_rigidBody = GetComponent<Rigidbody2D>();
     }
 
@@ -31,10 +38,10 @@ public class PlayerController : MonoBehaviour
         _FireBullet();
     }
 
-    private void _FireBullet()
+     private void _FireBullet()
     {
-        // delay bullet firing - every 40 frames
-        if (Time.frameCount % 20 == 0)
+        // delay bullet firing 
+        if(Time.frameCount % 60 == 0 && bulletManager.HasBullets())
         {
             bulletManager.GetBullet(transform.position);
         }
@@ -61,7 +68,8 @@ public class PlayerController : MonoBehaviour
                 direction = -1.0f;
             }
 
-            touchesEnd = worldTouch;
+            m_touchesEnded = worldTouch;
+
         }
 
         // keyboard support
@@ -77,9 +85,9 @@ public class PlayerController : MonoBehaviour
             direction = -1.0f;
         }
 
-        if (touchesEnd.x != 0.0f)
+        if (m_touchesEnded.x != 0.0f)
         {
-           transform.position = new Vector2(Mathf.Lerp(transform.position.x, touchesEnd.x, horizontalTValue), transform.position.y);
+           transform.position = new Vector2(Mathf.Lerp(transform.position.x, m_touchesEnded.x, horizontalTValue), transform.position.y);
         }
         else
         {

@@ -21,7 +21,7 @@ public class BackgroundController : MonoBehaviour
 
     private void _Move()
     {
-        transform.position -= new Vector3(0.0f, verticalSpeed);
+        transform.position -= new Vector3(0.0f, verticalSpeed) * Time.deltaTime;
     }
 
     private void _CheckBounds()

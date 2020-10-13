@@ -121,4 +121,5 @@ MonoBehaviour:
   horizontalBoundary: 1.9
   horizontalSpeed: 2
   maxSpeed: 6
-  horizontalTValue: 0.01
+  horizontalTValue: 0.1
+  fireDelay: 0.2
