@@ -5,10 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class BulletManager : MonoBehaviour
 {
-    public GameObject bullet;
+    //public GameObject bullet;
     public int MaxBullets;
 
     private Queue<GameObject> m_bulletPool;
+    public BulletFactory factory;
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +24,7 @@ public class BulletManager : MonoBehaviour
 
         for (int count = 0; count < MaxBullets; count++)
         {
-            var tempBullet = Instantiate(bullet);
-            tempBullet.SetActive(false);
-            tempBullet.transform.parent = transform;
+            var tempBullet = factory.CreateBullet();
             m_bulletPool.Enqueue(tempBullet);
         }
     }

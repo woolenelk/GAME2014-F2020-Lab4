@@ -33,4 +33,10 @@ public class BulletController : MonoBehaviour
             bulletManager.ReturnBullet(gameObject);
         }
     }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Debug.Log(collision.gameObject.name);
+        bulletManager.ReturnBullet(gameObject);
+    }
 }
